@@ -3,11 +3,11 @@
         <div class="header">
             <div class="selectRange">
                 <Menu mode="horizontal" @on-select="(name) =>$router.push(name)" :active-name="$route.name">
-                    <MenuItem name="page1">
-                        page1
+                    <MenuItem name="cex-dex">
+                        Cex & Dex
                     </MenuItem>
-                    <MenuItem name="page2">
-                        page2
+                    <MenuItem name="grid">
+                        Grid
                     </MenuItem>
                     <MenuItem name="page3">
                         page3
@@ -15,7 +15,7 @@
                 </Menu>
             </div>
             <div class="header-title">
-                大数据可视化平台
+                可视化平台
             </div>
             <div class="selectRange">
                 <Menu mode="horizontal" @on-select="handleSelect" :active-name="activeName">
@@ -34,7 +34,6 @@
                         </template>
                         <MenuItem name="filter">筛选</MenuItem>
                     </Submenu>
-
                 </Menu>
             </div>
         </div>
@@ -74,7 +73,7 @@ export default {
                 }
             },
             optionEnd: {},
-            resizeFn: null
+            resizeFn: null,
         }
     },
     mounted() {

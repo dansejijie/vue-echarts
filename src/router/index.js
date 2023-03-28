@@ -16,9 +16,14 @@ const router = new Router({
             component: home,
             children: [
                 {
-                    path: '/page1',
-                    name: 'page1',
-                    component: () => import('@/views/page1')
+                    path: '/cex-dex',
+                    name: 'cex-dex',
+                    component: () => import('@/views/cex-dex')
+                },
+                {
+                  path: '/grid',
+                  name: 'grid',
+                  component: () => import('@/views/grid')
                 },
                 {
                     path: '/page2',
