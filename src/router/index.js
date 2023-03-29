@@ -8,7 +8,7 @@ const router = new Router({
     routes: [
         {
             path: '/',
-            redirect: '/page1'
+            redirect: '/cex-dex'
         },
         {
             path: '',
