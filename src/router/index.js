@@ -26,6 +26,16 @@ const router = new Router({
                   component: () => import('@/views/grid')
                 },
                 {
+                  path: '/cow-bear',
+                  name: 'cow-bear',
+                  component: () => import('@/views/cow-bear')
+              },
+              {
+                path: '/cow-bear-stage',
+                name: 'cow-bear-stage',
+                component: () => import('@/views/cow-bear-stage')
+            },
+                {
                     path: '/page2',
                     name: 'page2',
                     component: () => import('@/views/page2')

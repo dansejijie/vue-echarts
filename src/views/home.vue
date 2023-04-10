@@ -9,8 +9,11 @@
                     <MenuItem name="grid">
                         Grid
                     </MenuItem>
-                    <MenuItem name="page3">
-                        page3
+                    <MenuItem name="cow-bear">
+                        Cow & Bear
+                    </MenuItem>
+                    <MenuItem name="cow-bear-stage">
+                        Cow & Bear & Stage
                     </MenuItem>
                 </Menu>
             </div>
