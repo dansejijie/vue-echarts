@@ -58,4 +58,10 @@ body {
   height: 100%;
   // background: #03044A;
 }
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 </style>
