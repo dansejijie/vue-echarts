@@ -17,7 +17,7 @@ export default {
   methods: {
     async fetchData() {
       const res = await axios.get('/task/grid');
-      const { countProfitList, balanceList, orderList } = res.data.data;
+      const { profitList, balanceList, priceList, markList } = res.data.data;
 
       // const countProfitList = [[1, 2], [2,2], [3, 3]];
       // const balanceList = [[1, 10], [2, 12], [3, 14]];
@@ -46,7 +46,7 @@ export default {
         series: [
           {
             name: '累计利润',
-            data: countProfitList,
+            data: profitList,
             type: 'line',
           },
           {
@@ -56,7 +56,7 @@ export default {
           },
           {
             name: '价格',
-            data: orderList,
+            data: priceList,
             yAxisIndex: 2,
             type: 'line',
             markPoint: {
@@ -74,4 +74,5 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+</style>

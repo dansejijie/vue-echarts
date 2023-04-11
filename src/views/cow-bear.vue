@@ -17,11 +17,10 @@ export default {
   methods: {
     async fetchData() {
       const res = await axios.get('/task/cow-bear/profit');
-      const countProfitList = res.data.data;
-      console.log('res', res);
+      const { profitList, balanceList, priceList, markList } = res.data.data;
       const option = {
         title: {
-          text: 'cow-bear 套利盈利',
+          text: 'Cow-Bear 套利盈利',
           left: 'center',
         },
         tooltip: {
@@ -33,13 +32,30 @@ export default {
         xAxis: {
           type: 'time',
         },
-        yAxis: {
-          type: 'value',
-        },
+        yAxis: [
+          { type: 'value'}, 
+          { type: 'value'},
+          { type: 'value'}
+        ],
         series: [
           {
-            data: countProfitList,
+            name: '累计利润',
+            data: profitList,
             type: 'line',
+          },
+          {
+            name: '当前余额',
+            data: balanceList,
+            type: 'line',
+          },
+          {
+            name: '价格',
+            data: priceList,
+            yAxisIndex: 2,
+            type: 'line',
+            markPoint: {
+              data: markList,
+            },
           },
         ],
       };
