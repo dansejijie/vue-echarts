@@ -17,8 +17,13 @@ export default {
   methods: {
     async fetchData() {
       const res = await axios.get('/task/grid');
-      const countProfitList = res.data.data;
-      console.log('res', res);
+      const { countProfitList, balanceList, orderList } = res.data.data;
+
+      // const countProfitList = [[1, 2], [2,2], [3, 3]];
+      // const balanceList = [[1, 10], [2, 12], [3, 14]];
+      // const orderList = [[1, 0.57], [2, 0.56], [3, 0.58]];
+      // const markList = [{value: 0.57, xAxis: 2, yAxis: 0.56}];
+
       const option = {
         title: {
           text: 'Gird 套利盈利',
@@ -33,13 +38,30 @@ export default {
         xAxis: {
           type: 'time',
         },
-        yAxis: {
-          type: 'value',
-        },
+        yAxis: [
+          { type: 'value'}, 
+          { type: 'value'},
+          { type: 'value'}
+        ],
         series: [
           {
+            name: '累计利润',
             data: countProfitList,
             type: 'line',
+          },
+          {
+            name: '当前余额',
+            data: balanceList,
+            type: 'line',
+          },
+          {
+            name: '价格',
+            data: orderList,
+            yAxisIndex: 2,
+            type: 'line',
+            markPoint: {
+              data: markList,
+            },
           },
         ],
       };
