@@ -1,5 +1,5 @@
 <template>
-  <div class="fill-container">
+  <div class="fill-container center">
     <Button v-for="button in buttonList" :key="button.key" @click="postStage(button.key)">{{
       button.label
     }}</Button>
@@ -52,4 +52,10 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.fill-container {
+  >button {
+    margin-top: 20px;
+  }
+}
+</style>
