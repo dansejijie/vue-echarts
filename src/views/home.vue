@@ -6,6 +6,9 @@
                     <MenuItem name="cex-dex">
                         Cex & Dex
                     </MenuItem>
+                    <MenuItem name="order-profit">
+                        Order & Profit
+                    </MenuItem>
                     <MenuItem name="grid">
                         Grid
                     </MenuItem>
