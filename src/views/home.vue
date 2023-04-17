@@ -12,6 +12,9 @@
                     <MenuItem name="grid">
                         Grid
                     </MenuItem>
+                    <MenuItem name="greedy">
+                        Greedy
+                    </MenuItem>
                     <MenuItem name="cow-bear">
                         Cow & Bear
                     </MenuItem>
@@ -20,43 +23,9 @@
                     </MenuItem>
                 </Menu>
             </div>
-            <div class="header-title">
-                可视化平台
-            </div>
-            <div class="selectRange">
-                <Menu mode="horizontal" @on-select="handleSelect" :active-name="activeName">
-                    <MenuItem name="day">
-                        昨日
-                    </MenuItem>
-                    <MenuItem name="week">
-                        近一周
-                    </MenuItem>
-                    <MenuItem name="month">
-                        近一月
-                    </MenuItem>
-                    <Submenu name="4">
-                        <template slot="title">
-                            <Icon type="ios-settings-outline" size="24" color="#60C2D4"/>
-                        </template>
-                        <MenuItem name="filter">筛选</MenuItem>
-                    </Submenu>
-                </Menu>
-            </div>
         </div>
-        <Modal
-            v-model="modal"
-            title="选择时间"
-            :mask-closable="false"
-            @on-ok="getMonthBetween(startTime,endTime)"
-        >
-            <DatePicker @on-change="pickStartDate" :options="optionStart" type="date" placeholder="选择开始日期"
-                        style="width: 200px"></DatePicker>
-            <span style="padding:0 20px;color:#75deef">至</span>
-            <DatePicker @on-change="pickEndDate" :options="optionEnd" type="date" placeholder="选择结束日期"
-                        style="width: 200px"></DatePicker>
-        </Modal>
         <div class="page">
-            <router-view v-if="flag" :selectRangeDate='selectRangeDate'></router-view>
+            <router-view v-if="flag"></router-view>
         </div>
 
     </div>

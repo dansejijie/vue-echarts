@@ -25,6 +25,11 @@ const router = new Router({
                   name: 'order-profit',
                   component: () => import('@/views/order-profit')
               },
+              {
+                path: '/greedy',
+                name: 'greedy',
+                component: () => import('@/views/greedy')
+            },
                 {
                   path: '/grid',
                   name: 'grid',
