@@ -63,7 +63,7 @@ export default {
           type: 'time',
         },
         yAxis: [
-          { type: 'value'}, 
+          { type: 'value', min: 'dataMin', max: 'dataMax'}, 
         ],
         series: [
           {
@@ -101,7 +101,7 @@ export default {
 
       const option = {
         title: {
-          text: '已对冲比本位累计',
+          text: '已对冲币本位累计',
           left: 'center',
         },
         tooltip: {
@@ -113,7 +113,7 @@ export default {
         xAxis: {
           type: 'time',
         },
-        yAxis: { type: 'value'}, 
+        yAxis: { type: 'value', min: 'dataMin', max: 'dataMax'}, 
         series: [
           {
             name: '利润',
@@ -156,7 +156,7 @@ export default {
         xAxis: {
           type: 'time',
         },
-        yAxis: { type: 'value'}, 
+        yAxis: { type: 'value', min: 'dataMin', max: 'dataMax'}, 
         series: [
           {
             name: '利润',
@@ -185,7 +185,7 @@ export default {
 
       const option = {
         title: {
-          text: '未对冲订单树',
+          text: '未对冲订单数',
           left: 'center',
         },
         tooltip: {
@@ -197,7 +197,7 @@ export default {
         xAxis: {
           type: 'time',
         },
-        yAxis: { type: 'value'}, 
+        yAxis: { type: 'value', min: 'dataMin', max: 'dataMax'}, 
         series: [
           {
             name: '未对冲订单数',
