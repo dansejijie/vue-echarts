@@ -21,11 +21,6 @@ const router = new Router({
           component: () => import('@/views/cex-dex'),
         },
         {
-          path: '/order-profit',
-          name: 'order-profit',
-          component: () => import('@/views/order-profit'),
-        },
-        {
           path: '/greedy',
           name: 'greedy',
           component: () => import('@/views/greedy'),
