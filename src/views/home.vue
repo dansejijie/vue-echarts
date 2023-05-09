@@ -22,6 +22,9 @@
           <MenuItem name="cow-bear-stage">
             Cow & Bear & Stage
           </MenuItem>
+          <MenuItem name="smart-wallet">
+              Smart-Wallet
+          </MenuItem>
         </Menu>
       </div>
     </div>

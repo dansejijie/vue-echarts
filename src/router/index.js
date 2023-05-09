@@ -40,6 +40,11 @@ const router = new Router({
           name: 'cow-bear-stage',
           component: () => import('@/views/cow-bear-stage'),
         },
+        {
+          path: '/smart-wallet',
+          name: 'smart-wallet',
+          component: () => import('@/views/smart-wallet')
+        },
       ],
     },
   ],
