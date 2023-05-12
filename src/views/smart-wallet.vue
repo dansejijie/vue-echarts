@@ -1,9 +1,33 @@
 <template>
-  <div class="fill-container"></div>
+  <div class="fill-container">
+    <div class="operate-wrapper">
+      <div class="item-wrapper">
+        <div class="name-wrapper">聪明钱包统计</div>
+        <Input  v-model="collectContractSmartWalletConfig.contractAddress" style="width: 600px;" placeholder="合约地址" @focus="collectContractSmartWalletConfig.result = ''">
+          <Select slot="prepend" v-model="collectContractSmartWalletConfig.chain" style="width: 80px;">
+            <Option v-for="item in collectContractSmartWalletConfig.chainList" :value="item.value" :key="item.value">{{ item.name }}</Option>
+          </Select>
+          <Button slot="append" @click="collectContractSmartWallet" :loading="collectContractSmartWalletConfig.loading">查询并记录</Button>
+        </Input>
+        <span class="ml">{{collectContractSmartWalletConfig.result}}</span>
+      </div>
+      <div class="item-wrapper">
+        <div class="name-wrapper">聪明钱包列表</div>
+        <div class="list-wrapper">
+          <Button @click="refresSmartWalletList" style="margin-bottom: 10px;" :loading="smartWalletConfig.loading">刷新智能钱包</Button>
+          <vxe-table :data="smartWalletConfig.smartWalletList" style="width: 100%;">
+            <vxe-column field="address" title="地址"></vxe-column>
+            <vxe-column field="tagList" title="交互合约"></vxe-column>
+          </vxe-table>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import axios from "../utils/http";
 import TransactionBehavior from "../bean/TransactionBehavior";
+
 /**
  * echart https://echarts.apache.org/examples/en/index.html
  * 图表统计： 基于标签、链画像。 对合约的行为作聚合，统计某段时间内的交互次数。
@@ -11,12 +35,49 @@ import TransactionBehavior from "../bean/TransactionBehavior";
  */
 export default {
   data() {
-    return {};
+    return {
+      collectContractSmartWalletConfig: {
+        contractAddress: '',
+        chain:  'ETH',
+        chainList: [{name: 'ETH', value: 'ETH'}, {name: 'ARB', value: 'ARB'}, {name: 'BSC', value: 'BSC'}],
+        loading: false,
+        result: '暂无',
+      },
+      smartWalletConfig: {
+        loading: false,
+        smartWalletList: [],
+      },
+      
+    };
   },
   mounted() {
-    this.init();
+    // this.init();
   },
   methods: {
+
+    async collectContractSmartWallet() {
+      try{
+        if(!this.collectContractSmartWalletConfig.contractAddress) return this.$Message.error('请输入合约地址'); 
+        this.collectContractSmartWalletConfig.loading = true;
+        const res = await axios.post(`/smart/collectContractwallet`, {contractAddress: this.collectContractSmartWalletConfig.contractAddress, chain: this.collectContractSmartWalletConfig.chain});
+        console.log(res);
+        this.collectContractSmartWalletConfig.result = `插入数量: ${res.data.data.length}` ;
+        this.$Message.info('操作成功');
+      }catch(err){
+        this.$Message.error(err.message);
+      } finally {
+        this.collectContractSmartWalletConfig.loading = false;
+      }
+
+    },
+
+    async refresSmartWalletList() {
+      this.smartWalletConfig.loading = true;
+      const res = await axios.get(`/smart/smartWalletList`);
+      this.smartWalletConfig.smartWalletList = res.data.data;
+      this.smartWalletConfig.loading = false;
+      console.log(res);
+    },
 
     async init() {
        const chainData = await this.fetchData();
@@ -144,6 +205,27 @@ export default {
   flex-direction: column;
   > div {
     height: 40vh;
+  }
+  .operate-wrapper {
+    .item-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px;
+      margin: 10px;
+      border: 1px solid #f1f1f1;
+      .name-wrapper {
+        width: 120px;
+        .name {
+
+        }
+      }
+      .list-wrapper {
+        flex: 1;
+        overflow: hidden;
+      }
+    }
   }
 }
 </style>

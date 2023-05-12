@@ -64,4 +64,7 @@ body {
   align-items: center;
   flex-direction: column;
 }
+.ml {
+  margin-left: 10px;
+}
 </style>

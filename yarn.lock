@@ -8360,6 +8360,11 @@ vue@^2.6.11:
   resolved "https://registry.npmmirror.com/vue/download/vue-2.6.14.tgz?cache=0&sync_timestamp=1633712767060&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fvue%2Fdownload%2Fvue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
   integrity sha1-5RqlJQJQ1Wmj+606ilpofWA24jU=
 
+vxe-table@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.npmmirror.com/vxe-table/-/vxe-table-2.11.0.tgz#0000e5da80a518ae781fc18ad4a47a94da18f571"
+  integrity sha512-dDLV2Iiy/8Yiy14MX91TQb2HsW9K5ZYS3+xIjBmKc5JFMEHeuB8SxaFShSXhVk9GNTd+/u0GqvQhDoQ1WXAwnw==
+
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
   resolved "https://registry.nlark.com/watchpack-chokidar2/download/watchpack-chokidar2-2.0.1.tgz#38500072ee6ece66f3769936950ea1771be1c957"
@@ -8622,6 +8627,11 @@ ws@^6.0.0, ws@^6.2.1:
   integrity sha1-3Vzb1XqZeZFgl2UtePHMX66gwy4=
   dependencies:
     async-limiter "~1.0.0"
+
+xe-utils@^3.5.7:
+  version "3.5.7"
+  resolved "https://registry.npmmirror.com/xe-utils/-/xe-utils-3.5.7.tgz#2c885852dfadd5c8beeffdc1f884f8ceb962c669"
+  integrity sha512-3H+fDBKBR2wLJgyA7k9C/w1Xljx6Maml5ukV0WDY06HjYyGs2FEz6XhcwRCLIDXX4pBP3Gu0nX9DbCeuuRA2Ew==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
