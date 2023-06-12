@@ -173,13 +173,12 @@ export default {
     },
     async fetchData() {
       const res = await axios.get('/task/market/order-profit', {
-        params: { orderModel: 'GreedyOrder' },
+        params: { orderModel: 'GreedyOrder', currencyPair: 'WBTC_USDT' },
       });
 
       this.drawOrder(res.data.data);
       this.drawProfit(res.data.data);
       this.drawLossOrder(res.data.data);
-      this.drawLoss(res.data.data);
     },
   },
 };

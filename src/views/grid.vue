@@ -1,5 +1,11 @@
 <template>
   <div class="fill-container">
+    <span>
+      <Select v-model="currencyPair" @on-change="onChange">
+        <Option value="WETH_WBTC">WETH_WBTC</Option>
+        <Option value="ARB_WETH">ARB_WETH</Option>
+      </Select>
+    </span>
     <div id="order"></div>
     <div id="profit"></div>
     <div id="loss-num"></div>
@@ -15,12 +21,17 @@ import dayjs from 'dayjs';
  */
 export default {
   data() {
-    return {};
+    return {
+      currencyPair: 'WETH_WBTC',
+    };
   },
   mounted() {
     this.fetchData();
   },
   methods: {
+    onChange() {
+      this.fetchData();
+    },
     drawOption(option, ele) {
       let myChart = this.$echarts(ele);
       myChart.clear();
@@ -63,7 +74,9 @@ export default {
         xAxis: {
           type: 'time',
         },
-        yAxis: [{ type: 'value', min: 'dataMin', max: 'dataMax', name: 'ETH/WBTC价格' }],
+        yAxis: [
+          { type: 'value', min: 'dataMin', max: 'dataMax', name: `${this.currencyPair}价格` },
+        ],
         series: [
           {
             name: '价格',
@@ -80,6 +93,7 @@ export default {
     },
 
     async drawProfit({ orderList = [] }) {
+      const currencyPairList = this.currencyPair.split('_');
       let profitLeftList = [];
       let profitRightList = [];
       let left = 0;
@@ -101,7 +115,7 @@ export default {
 
       const option = {
         title: {
-          text: '以ETH/BTC计价累计',
+          text: `以${this.currencyPair}计价累计`,
           left: 'center',
         },
         tooltip: {
@@ -115,17 +129,17 @@ export default {
           name: '日期',
         },
         yAxis: [
-          { type: 'value', min: 'dataMin', max: 'dataMax', name: 'ETH' },
-          { type: 'value', min: 'dataMin', max: 'dataMax', name: 'WBTC' },
+          { type: 'value', min: 'dataMin', max: 'dataMax', name: currencyPairList[0] },
+          { type: 'value', min: 'dataMin', max: 'dataMax', name: currencyPairList[1] },
         ],
         series: [
           {
-            name: 'ETH利润',
+            name: `${currencyPairList[0]}利润`,
             data: profitLeftList,
             type: 'line',
           },
           {
-            name: 'WBTC利润',
+            name: `${currencyPairList[1]}利润`,
             data: profitRightList,
             type: 'line',
             yAxisIndex: 1,
@@ -179,13 +193,12 @@ export default {
     },
     async fetchData() {
       const res = await axios.get('/task/market/order-profit', {
-        params: { orderModel: 'GridOrder' },
+        params: { orderModel: 'GridOrder', currencyPair: this.currencyPair },
       });
 
       this.drawOrder(res.data.data);
       this.drawProfit(res.data.data);
       this.drawLossOrder(res.data.data);
-      this.drawLoss(res.data.data);
     },
   },
 };
