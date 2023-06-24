@@ -8,6 +8,7 @@
     </span>
     <div id="order"></div>
     <div id="profit"></div>
+    <div id="balance"></div>
     <div id="loss-num"></div>
   </div>
 </template>
@@ -27,10 +28,12 @@ export default {
   },
   mounted() {
     this.fetchData();
+    this.fetchBalanceData();
   },
   methods: {
     onChange() {
       this.fetchData();
+      this.fetchBalanceData();
     },
     drawOption(option, ele) {
       let myChart = this.$echarts(ele);
@@ -190,6 +193,50 @@ export default {
       const ele = document.querySelector('#loss-num');
       console.log('loss', option, ele);
       this.drawOption(option, ele);
+    },
+    async drawBalance({ leftBaseValueList, rightBaseValueList }) {
+      const currencyPairList = this.currencyPair.split('_');
+      const option = {
+        title: {
+          text: `余额统计`,
+          left: 'center',
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            animation: false,
+          },
+        },
+        xAxis: {
+          type: 'time',
+          name: '日期',
+        },
+        yAxis: [
+          { type: 'value', min: 'dataMin', max: 'dataMax', name: currencyPairList[0] },
+          { type: 'value', min: 'dataMin', max: 'dataMax', name: currencyPairList[1] },
+        ],
+        series: [
+          {
+            name: `以${currencyPairList[0]}计价累计`,
+            data: leftBaseValueList,
+            type: 'line',
+          },
+          {
+            name: `以${currencyPairList[1]}计价累计`,
+            data: rightBaseValueList,
+            type: 'line',
+            yAxisIndex: 1,
+          },
+        ],
+      };
+      const ele = document.querySelector('#balance');
+      this.drawOption(option, ele);
+    },
+    async fetchBalanceData() {
+      const res = await axios.get('/task/market/order-balance', {
+        params: { model: 'BalanceValue', task: 'GridTask', currencyPair: this.currencyPair },
+      });
+      this.drawBalance(res.data.data);
     },
     async fetchData() {
       const res = await axios.get('/task/market/order-profit', {
