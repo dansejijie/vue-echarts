@@ -8,6 +8,7 @@
     </span>
     <div id="order"></div>
     <div id="profit"></div>
+    <div id="balance"></div>
     <div id="loss-num"></div>
   </div>
 </template>
@@ -95,54 +96,54 @@ export default {
       this.drawOption(option, ele);
     },
 
-    // async drawProfit({ orderList = [] }) {
-    //   const idMap = {};
-    //   orderList.forEach((order) => {
-    //     idMap[order._id] = order;
-    //   });
-    //   let profitList = [];
-    //   let left = 0;
-    //   let right = 0;
-    //   orderList
-    //     .filter((order) => order.side === 'buy')
-    //     .forEach((order) => {
-    //       if (order.sellOrderId) {
-    //         const unix = dayjs(order.createdAt).unix() * 1000;
-    //         const sellOrder = idMap[order.sellOrderId];
-    //         left = left + order.amount - sellOrder.amount;
-    //         right = right - order.amount * order.price + sellOrder.amount * sellOrder.price;
-    //         const profit = Number((left + right / sellOrder.price).toFixed(4));
-    //         profitList.push([unix, profit]);
-    //       }
-    //     });
+    async drawProfit({ orderList = [] }) {
+      const idMap = {};
+      orderList.forEach((order) => {
+        idMap[order._id] = order;
+      });
+      let profitList = [];
+      let left = 0;
+      let right = 0;
+      orderList
+        .filter((order) => order.side === 'buy')
+        .forEach((order) => {
+          if (order.sellOrderId) {
+            const unix = dayjs(order.createdAt).unix() * 1000;
+            const sellOrder = idMap[order.sellOrderId];
+            left = left + order.amount - sellOrder.amount;
+            right = right - order.amount * order.price + sellOrder.amount * sellOrder.price;
+            const profit = Number((left + right / sellOrder.price).toFixed(4));
+            profitList.push([unix, profit]);
+          }
+        });
 
-    //   const option = {
-    //     title: {
-    //       text: '已对冲BTC币本位累计',
-    //       left: 'center',
-    //     },
-    //     tooltip: {
-    //       trigger: 'axis',
-    //       axisPointer: {
-    //         animation: false,
-    //       },
-    //     },
-    //     xAxis: {
-    //       type: 'time',
-    //     },
-    //     yAxis: { type: 'value', min: 'dataMin', max: 'dataMax' },
-    //     series: [
-    //       {
-    //         name: '利润',
-    //         data: profitList,
-    //         type: 'line',
-    //       },
-    //     ],
-    //   };
-    //   const ele = document.querySelector('#profit');
-    //   console.log('profit', option, ele);
-    //   this.drawOption(option, ele);
-    // },
+      const option = {
+        title: {
+          text: '已对冲BTC币本位累计',
+          left: 'center',
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            animation: false,
+          },
+        },
+        xAxis: {
+          type: 'time',
+        },
+        yAxis: { type: 'value', min: 'dataMin', max: 'dataMax' },
+        series: [
+          {
+            name: '利润',
+            data: profitList,
+            type: 'line',
+          },
+        ],
+      };
+      const ele = document.querySelector('#profit');
+      console.log('profit', option, ele);
+      this.drawOption(option, ele);
+    },
 
     async drawLossOrder({ orderList = [] }) {
       let numList = [];
@@ -220,7 +221,7 @@ export default {
           },
         ],
       };
-      const ele = document.querySelector('#profit');
+      const ele = document.querySelector('#balance');
       this.drawOption(option, ele);
     },
 
@@ -230,7 +231,7 @@ export default {
       });
 
       this.drawOrder(res.data.data);
-      // this.drawProfit(res.data.data);
+      this.drawProfit(res.data.data);
       this.drawLossOrder(res.data.data);
     },
 
