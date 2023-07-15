@@ -9,6 +9,7 @@
       </Select>
     </span>
     <div id="order"></div>
+    <div id="profit"></div>
     <div id="balance"></div>
   </div>
 </template>
@@ -96,11 +97,40 @@ export default {
       this.drawOption(option, ele);
     },
 
+    drawProfit({ profitList = [] }) {
+      const currencyPairList = this.currencyPair.split('_');
+      const option = {
+        title: {
+          text: `以${currencyPairList[0]}计价累计利润`,
+          left: 'center',
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            animation: false,
+          },
+        },
+        xAxis: {
+          type: 'time',
+        },
+        yAxis: [{ type: 'value', min: 'dataMin', max: 'dataMax' }],
+        series: [
+          {
+            name: '利润',
+            data: profitList,
+            type: 'line',
+          },
+        ],
+      };
+      const ele = document.querySelector('#profit');
+      this.drawOption(option, ele);
+    },
+
     async drawBalance({ leftBaseValueList, rightBaseValueList }) {
       const currencyPairList = this.currencyPair.split('_');
       const option = {
         title: {
-          text: `余额统计`,
+          text: `以${currencyPairList[1]}计价累计余额`,
           left: 'center',
         },
         tooltip: {
@@ -113,21 +143,14 @@ export default {
           type: 'time',
           name: '日期',
         },
-        yAxis: [
-          { type: 'value', min: 'dataMin', max: 'dataMax', name: currencyPairList[0] },
-          { type: 'value', min: 'dataMin', max: 'dataMax', name: currencyPairList[1] },
-        ],
+        yAxis: [{ type: 'value', min: 'dataMin', max: 'dataMax', name: currencyPairList[1] }],
         series: [
           {
-            name: `以${currencyPairList[0]}计价累计`,
-            data: leftBaseValueList,
-            type: 'line',
-          },
-          {
-            name: `以${currencyPairList[1]}计价累计`,
+            // 对Greedy来说，right 数量多，left 数量少，统计受价格影响小很多
+            name: `余额`,
             data: rightBaseValueList,
             type: 'line',
-            yAxisIndex: 1,
+            yAxisIndex: 0,
           },
         ],
       };
@@ -139,8 +162,8 @@ export default {
       const res = await axios.get('/task/market/order-profit', {
         params: { orderModel: 'GreedyOrder', currencyPair: this.currencyPair },
       });
-
       this.drawOrder(res.data.data);
+      this.drawProfit(res.data.data);
     },
 
     async fetchBalanceData() {
